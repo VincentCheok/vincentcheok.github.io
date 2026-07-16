@@ -722,6 +722,11 @@ nextBtn.addEventListener('click', () => {
 });
 updateTimeline(YEAR_MIN);
 fitDescBox();
+// re-measure once web fonts finish loading -- the very first measurement can
+// run before Playfair/Inter swap in, which would under-size the fixed box
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(fitDescBox);
+}
 window.addEventListener('resize', () => {
   clearTimeout(window.__fitDescTimer);
   window.__fitDescTimer = setTimeout(fitDescBox, 200);
